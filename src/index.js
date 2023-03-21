@@ -10,18 +10,22 @@ const refs = {
 refs.searchForm.addEventListener('submit', onSearch);
 refs.loadMoreBtn.addEventListener('click', onLoadMore);
 
+let searchQuery = '';
+
 function onSearch(e) {
     e.preventDefault();
-    let textInput = e.target.searchQuery.value;
-    resetMarkup;
-    if (textInput === '') {
+    searchQuery = e.target.searchQuery.value;
+    resetMarkup();
+    if (searchQuery === '') {
+        resetMarkup();
         return
     };
-    API.fetchPictures(textInput)
+    API.fetchPictures(searchQuery)
         .then(renderMarkup)
         .catch(onFetchError)
     
     e.target.searchQuery.value = '';
+    
 };
 
 function resetMarkup() {
@@ -65,5 +69,7 @@ function onFetchError() {
 };
 
 function onLoadMore() {
-
+    API.fetchPictures(searchQuery)
+        .then(renderMarkup)
+        .catch(onFetchError)
 };
