@@ -1,8 +1,5 @@
 import API from './fetchPictures';
 import Notiflix from 'notiflix';
-import SimpleLightbox from "simplelightbox";
-import "simplelightbox/dist/simple-lightbox.min.css";
-
 
 const refs = {
     searchForm: document.querySelector('#search-form'),
@@ -14,14 +11,12 @@ refs.searchForm.addEventListener('submit', onSearch);
 refs.loadMoreBtn.addEventListener('click', onLoadMore);
 
 let searchQuery = '';
-let totalHits = '';
 
 function onSearch(e) {
     e.preventDefault();
     searchQuery = e.target.searchQuery.value;
     resetMarkup();
     if (searchQuery === '') {
-        // resetMarkup();
         location. reload()
         return
     };
@@ -37,8 +32,6 @@ function resetMarkup() {
 };
 
 function renderMarkup(pictures) {
-    // console.log(pictures)
-    totalHits = pictures.totalHits
     if (pictures.hits.length === 0) {
         Notiflix.Notify.warning('Sorry, there are no images matching your search query. Please try again.');   
     };
@@ -77,13 +70,4 @@ function onLoadMore() {
     API.fetchPictures(searchQuery)
         .then(renderMarkup)
         .catch(onFetchError)
-    console.log(totalHits)
 };
-
-new SimpleLightbox(".gallery a", {
-    captionSelector: 'img',
-    captionsData: 'alt',
-    captionPosition: 'bottom',
-    captionDelay: 250,
-    scrollZoom: false,
-});
