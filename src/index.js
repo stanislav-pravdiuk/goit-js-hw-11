@@ -3,10 +3,12 @@ import Notiflix from 'notiflix';
 
 const refs = {
     searchForm: document.querySelector('#search-form'),
-    galleryContainer: document.querySelector('.gallery')
+    galleryContainer: document.querySelector('.gallery'),
+    loadMoreBtn: document.querySelector('.load-more')
 };
 
 refs.searchForm.addEventListener('submit', onSearch);
+refs.loadMoreBtn.addEventListener('click', onLoadMore);
 
 function onSearch(e) {
     e.preventDefault();
@@ -60,4 +62,8 @@ function renderMarkup(pictures) {
 
 function onFetchError() {
     Notiflix.Notify.failure('WTF?!');
+};
+
+function onLoadMore() {
+
 };
