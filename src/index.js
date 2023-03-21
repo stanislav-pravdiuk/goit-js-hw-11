@@ -24,8 +24,10 @@ function resetMarkup() {
     console.log('будет убивать разметку')
 };
 
-function renderMarkup() {
-    console.log('будет создавать разметку')
+function renderMarkup(pictures) {
+    // const createdEl = pictures.map
+    console.log(pictures);
+
 };
 
 function onFetchError() {'будет выдавать ошибки'};
