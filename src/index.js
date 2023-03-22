@@ -38,11 +38,12 @@ function resetMarkup() {
 
 function renderMarkup(pictures) {
     
-    totalHits = pictures.data.totalHits
+    totalHits = pictures.data.totalHits;
     if (pictures.data.hits.length === 0) {
         Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');   
     };
-    
+    Notiflix.Notify.success(`Hooray! We found ${pictures.data.totalHits} images.`);
+    refs.loadMoreBtn.classList.toggle('visually-hidden')
     const createdElements = pictures.data.hits.map(el => {
         const createdEl = `
         <div class="gallery photo-card">
@@ -77,6 +78,8 @@ function onFetchError() {
 
 function onLoadMore() {
     fetchPictures(searchQuery)
+    Notiflix.Notify.success(`Hooray! We found ${totalHits - page * per_page} images.`);
+    refs.loadMoreBtn.classList.toggle('visually-hidden')
 };
 
 function fetchPictures(searchQuery) {
