@@ -42,7 +42,6 @@ function renderMarkup(pictures) {
     if (pictures.data.hits.length === 0) {
         Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');   
     };
-    Notiflix.Notify.success(`Hooray! We found ${pictures.data.totalHits} images.`);
     refs.loadMoreBtn.classList.toggle('visually-hidden')
     const createdElements = pictures.data.hits.map(el => {
         const createdEl = `
@@ -78,21 +77,47 @@ function onFetchError() {
 
 function onLoadMore() {
     fetchPictures(searchQuery)
-    Notiflix.Notify.success(`Hooray! We found ${totalHits - page * per_page} images.`);
+    if ((totalHits - page * per_page) > 0) {
+        Notiflix.Notify.success(`Hooray! We found ${totalHits - page * per_page} images.`);
+    }
     refs.loadMoreBtn.classList.toggle('visually-hidden')
 };
 
-function fetchPictures(searchQuery) {
-    page += 1;
-    if ((totalHits - page * per_page) < 0) {
-        Notiflix.Notify.warning('We`re sorry, but you`ve reached the end of search results.');
-        return
-    }
+// function fetchPictures(searchQuery) {
+//     page += 1;
+//     if ((totalHits - page * per_page) < 0) {
+//         Notiflix.Notify.warning('We`re sorry, but you`ve reached the end of search results.');
+//         return
+//     }
 
-    axios({
-    method: 'get',
-    url: 'https://pixabay.com/api/',
-    params: {
+//     axios({
+//     method: 'get',
+//     url: 'https://pixabay.com/api/',
+//     params: {
+//         key: API_KEY,
+//         q: searchQuery,
+//         per_page: per_page,
+//         page: page,
+//         safesearch: true,
+//         orientation: 'horizontal',
+//         image_type: 'photo',
+//         }
+//     })
+    
+//         .then(renderMarkup)
+//         .catch(onFetchError)
+// };
+
+async function fetchPictures(searchQuery) {
+  page += 1;
+  if ((totalHits - page * per_page) < 0) {
+    Notiflix.Notify.warning('We`re sorry, but you`ve reached the end of search results.');
+    return;
+  }
+
+  try {
+    const response = await axios.get('https://pixabay.com/api/', {
+      params: {
         key: API_KEY,
         q: searchQuery,
         per_page: per_page,
@@ -100,12 +125,13 @@ function fetchPictures(searchQuery) {
         safesearch: true,
         orientation: 'horizontal',
         image_type: 'photo',
-        }
-    })
-    
-        .then(renderMarkup)
-        .catch(onFetchError)
-};
+      },
+    });
+    renderMarkup(response);
+  } catch (error) {
+    onFetchError(error);
+  }
+}
 
 new SimpleLightbox(".gallery a", {
     captionSelector: 'img',
