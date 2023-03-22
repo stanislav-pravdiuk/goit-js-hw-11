@@ -39,7 +39,6 @@ function resetMarkup() {
 function renderMarkup(pictures) {
     
     totalHits = pictures.data.totalHits
-    console.log(pictures.data.totalHits)
     if (pictures.data.hits.length === 0) {
         Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');   
     };
