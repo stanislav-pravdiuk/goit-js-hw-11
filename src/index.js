@@ -1,6 +1,7 @@
-
 import Notiflix from 'notiflix';
 import axios from 'axios';
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
 const refs = {
     searchForm: document.querySelector('#search-form'),
@@ -27,8 +28,6 @@ function onSearch(e) {
         return
     };
     fetchPictures(searchQuery)
-        // .then(renderMarkup)
-        // .catch(onFetchError)
     
     e.target.searchQuery.value = '';
 };
@@ -38,15 +37,19 @@ function resetMarkup() {
 };
 
 function renderMarkup(pictures) {
-    totalHits = pictures.totalHits
-    if (pictures.hits.length === 0) {
-        Notiflix.Notify.warning('Sorry, there are no images matching your search query. Please try again.');   
+    
+    totalHits = pictures.data.totalHits
+    console.log(pictures.data.totalHits)
+    if (pictures.data.hits.length === 0) {
+        Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');   
     };
     
-    const createdElements = pictures.hits.map(el => {
+    const createdElements = pictures.data.hits.map(el => {
         const createdEl = `
         <div class="gallery photo-card">
+            <a href="${el.largeImageURL}">
             <img src="${el.webformatURL}" alt="${el.tags}" loading="lazy" />
+            </a>
             <div class="info">
                 <p class="info-item">
                 <b>Likes: ${el.likes}</b>
@@ -75,18 +78,14 @@ function onFetchError() {
 
 function onLoadMore() {
     fetchPictures(searchQuery)
-        // .then(renderMarkup)
-        // .catch(onFetchError)
 };
 
 function fetchPictures(searchQuery) {
     page += 1;
-    console.log(totalHits)
     if ((totalHits - page * per_page) < 0) {
         Notiflix.Notify.warning('We`re sorry, but you`ve reached the end of search results.');
         return
     }
-    // const url = `https://pixabay.com/api/?key=${API_KEY}&q=${searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=${per_page}`;
 
     axios({
     method: 'get',
@@ -104,10 +103,12 @@ function fetchPictures(searchQuery) {
     
         .then(renderMarkup)
         .catch(onFetchError)
-    // return fetch(url).then(response => {
-    //     if (response.ok) {
-    //         return response.json()
-    //     } throw new Error(response.statusText)
-    // } 
-// ) 
 };
+
+new SimpleLightbox(".gallery a", {
+    captionSelector: 'img',
+    captionsData: 'alt',
+    captionPosition: 'bottom',
+    captionDelay: 250,
+    scrollZoom: false,
+}).refresh
