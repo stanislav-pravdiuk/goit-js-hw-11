@@ -17,6 +17,13 @@ let totalHits = 1000;
 const API_KEY = '34574978-aeefc0d62f6da3cbea3bfb7cd';
 let page = 0;
 const per_page = 40;
+const simpleLightbox = new SimpleLightbox(".gallery a", {
+    captionSelector: 'img',
+    captionsData: 'alt',
+    captionPosition: 'bottom',
+    captionDelay: 250,
+    scrollZoom: false,
+})
 
 
 function onSearch(e) {
@@ -84,31 +91,6 @@ function onLoadMore() {
     refs.loadMoreBtn.classList.toggle('visually-hidden')
 };
 
-// function fetchPictures(searchQuery) {
-//     page += 1;
-//     if ((totalHits - page * per_page) < 0) {
-//         Notiflix.Notify.warning('We`re sorry, but you`ve reached the end of search results.');
-//         return
-//     }
-
-//     axios({
-//     method: 'get',
-//     url: 'https://pixabay.com/api/',
-//     params: {
-//         key: API_KEY,
-//         q: searchQuery,
-//         per_page: per_page,
-//         page: page,
-//         safesearch: true,
-//         orientation: 'horizontal',
-//         image_type: 'photo',
-//         }
-//     })
-    
-//         .then(renderMarkup)
-//         .catch(onFetchError)
-// };
-
 async function fetchPictures(searchQuery) {
   page += 1;
   if ((totalHits - page * per_page) < 0) {
@@ -133,11 +115,3 @@ async function fetchPictures(searchQuery) {
     onFetchError(error);
   }
 }
-
-const simpleLightbox = new SimpleLightbox(".gallery a", {
-    captionSelector: 'img',
-    captionsData: 'alt',
-    captionPosition: 'bottom',
-    captionDelay: 250,
-    scrollZoom: false,
-})
