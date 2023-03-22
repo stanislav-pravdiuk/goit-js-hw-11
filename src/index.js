@@ -1,4 +1,4 @@
-// import API from './fetchPictures';
+
 import Notiflix from 'notiflix';
 import axios from 'axios';
 
@@ -75,8 +75,8 @@ function onFetchError() {
 
 function onLoadMore() {
     fetchPictures(searchQuery)
-        .then(renderMarkup)
-        .catch(onFetchError)
+        // .then(renderMarkup)
+        // .catch(onFetchError)
 };
 
 function fetchPictures(searchQuery) {
@@ -92,14 +92,14 @@ function fetchPictures(searchQuery) {
     method: 'get',
     url: 'https://pixabay.com/api/',
     params: {
-        key: '34574978-aeefc0d62f6da3cbea3bfb7cd',
+        key: API_KEY,
         q: searchQuery,
         per_page: per_page,
         page: page,
         safesearch: true,
         orientation: 'horizontal',
         image_type: 'photo',
-  }
+        }
     })
     
         .then(renderMarkup)
