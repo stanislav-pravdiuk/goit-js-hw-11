@@ -42,6 +42,7 @@ function renderMarkup(pictures) {
     if (pictures.data.hits.length === 0) {
         Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');   
     };
+    simpleLightbox.refresh()
     refs.loadMoreBtn.classList.toggle('visually-hidden')
     const createdElements = pictures.data.hits.map(el => {
         const createdEl = `
@@ -133,10 +134,10 @@ async function fetchPictures(searchQuery) {
   }
 }
 
-new SimpleLightbox(".gallery a", {
+const simpleLightbox = new SimpleLightbox(".gallery a", {
     captionSelector: 'img',
     captionsData: 'alt',
     captionPosition: 'bottom',
     captionDelay: 250,
     scrollZoom: false,
-}).refresh
+})
