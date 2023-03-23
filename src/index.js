@@ -50,7 +50,7 @@ function renderMarkup(pictures) {
     if (pictures.data.hits.length === 0) {
         Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');   
     };
-    refs.loadMoreBtn.classList.toggle('visually-hidden')
+    
     const createdElements = pictures.data.hits.map(el => {
         const createdEl = `
         <div class="gallery photo-card">
@@ -77,6 +77,7 @@ function renderMarkup(pictures) {
     }).join('');
 
     refs.galleryContainer.innerHTML = createdElements;
+    refs.loadMoreBtn.classList.toggle('visually-hidden')
     simpleLightbox.refresh();
     
 };

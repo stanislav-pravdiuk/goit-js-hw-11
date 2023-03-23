@@ -47,10 +47,6 @@ input::placeholder {
         border-width: 1px;
         margin-top: 20px;
         margin-bottom: 30px;
-        display: flex;
-        justify-content: center;
-        height: 30px;
-        text-align: center;
 }
 
 .gallery {
