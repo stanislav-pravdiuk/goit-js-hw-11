@@ -2,6 +2,7 @@ import Notiflix from 'notiflix';
 import axios from 'axios';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
+// import './styles.css';
 
 const refs = {
     searchForm: document.querySelector('#search-form'),
@@ -49,7 +50,6 @@ function renderMarkup(pictures) {
     if (pictures.data.hits.length === 0) {
         Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');   
     };
-    simpleLightbox.refresh()
     refs.loadMoreBtn.classList.toggle('visually-hidden')
     const createdElements = pictures.data.hits.map(el => {
         const createdEl = `
@@ -59,16 +59,16 @@ function renderMarkup(pictures) {
             </a>
             <div class="info">
                 <p class="info-item">
-                <b>Likes: ${el.likes}</b>
+                <b>Likes:<br> ${el.likes}</b>
                 </p>
                 <p class="info-item">
-                <b>Views: ${el.views}</b>
+                <b>Views:<br> ${el.views}</b>
                 </p>
                 <p class="info-item">
-                <b>Comments: ${el.comments}</b>
+                <b>Comments:<br> ${el.comments}</b>
                 </p>
                 <p class="info-item">
-                <b>Downloads: ${el.downloads}</b>
+                <b>Downloads:<br> ${el.downloads}</b>
                 </p>
             </div>
             </div>
@@ -77,6 +77,8 @@ function renderMarkup(pictures) {
     }).join('');
 
     refs.galleryContainer.innerHTML = createdElements;
+    simpleLightbox.refresh();
+    
 };
 
 function onFetchError() {
@@ -92,15 +94,15 @@ function onLoadMore() {
 };
 
 async function fetchPictures(searchQuery) {
-  page += 1;
+    page += 1;
   if ((totalHits - page * per_page) < 0) {
     Notiflix.Notify.warning('We`re sorry, but you`ve reached the end of search results.');
     return;
-  }
+    }
 
-  try {
+    try {
     const response = await axios.get('https://pixabay.com/api/', {
-      params: {
+    params: {
         key: API_KEY,
         q: searchQuery,
         per_page: per_page,
@@ -108,10 +110,10 @@ async function fetchPictures(searchQuery) {
         safesearch: true,
         orientation: 'horizontal',
         image_type: 'photo',
-      },
+    },
     });
     renderMarkup(response);
-  } catch (error) {
+    } catch (error) {
     onFetchError(error);
-  }
+    }
 }

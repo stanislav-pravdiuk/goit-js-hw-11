@@ -1,3 +1,73 @@
 .visually-hidden {
     display: none;
 }
+
+body {
+    background: rgb(129, 133, 133);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.search-form {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.search-form input {
+    border-radius: 4px;
+    margin-right: 4px;
+    height: 30px;
+    width: 300px;
+    background-color: rgb(129, 133, 133);
+    border-color: black;
+    color: white;
+    border-width: 1px;
+}
+
+input::placeholder {
+    color: white;
+}
+
+.search-form button {
+    background-color: rgb(129, 133, 133);
+    color: white;
+    border-color: black;
+    border-width: 1px;
+}
+
+.load-more {
+    background-color: rgb(129, 133, 133);
+        color: white;
+        border-color: black;
+        border-width: 1px;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.photo-card {
+    display: block;
+    margin-right: 10px;
+    flex-basis: calc((100% - 5 * 10px) / 4);
+}
+
+.info {
+    display: flex;
+    justify-content: center;
+}
+.info-item {
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* margin-right: 5px; */
+    flex-basis: calc((100% - 4 * 10px) / 4);
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
