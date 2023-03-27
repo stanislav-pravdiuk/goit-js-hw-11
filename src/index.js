@@ -79,7 +79,7 @@ function renderMarkup(pictures) {
     refs.loadMoreBtn.classList.remove('visually-hidden');
 
     simpleLightbox.refresh();
-    
+
     if (pictures.data.hits.length < 40) {
         refs.loadMoreBtn.classList.add('visually-hidden')
     }
@@ -97,15 +97,11 @@ function onLoadMore() {
     searchQuery = '';
     if ((totalHits - page * per_page) > 0) {
         Notiflix.Notify.success(`Hooray! We found ${totalHits - page * per_page} images.`);
-    };
-
-    if ((totalHits - page * per_page) < 0) {
+    } else {
         Notiflix.Notify.warning('We`re sorry, but you`ve reached the end of search results.');
-        refs.loadMoreBtn.classList.add('visually-hidden')
-    return;
+        refs.loadMoreBtn.classList.add('visually-hidden');
     }
 
-    // refs.loadMoreBtn.classList.toggle('visually-hidden')
 };
 
 async function fetchPictures(searchQuery) {
