@@ -30,13 +30,13 @@ const simpleLightbox = new SimpleLightbox(".gallery a", {
 function onSearch(e) {
     e.preventDefault();
     searchQuery = e.target.searchQuery.value.trim();
-    // resetMarkup();
+    resetMarkup();
     if (!searchQuery) {
         return
     };
     fetchPictures(searchQuery)
     
-    // e.target.searchQuery.value = ''; 
+    e.target.reset();
 };
 
 function resetMarkup() {
@@ -75,7 +75,8 @@ function renderMarkup(pictures) {
         return createdEl;
     }).join('');
 
-    refs.galleryContainer.insertAdjacentElement('beforeend', createdElements);
+    refs.galleryContainer.insertAdjacentHTML("beforeend", createdElements);
+    // refs.galleryContainer.innerHTML = createdElements;
     refs.loadMoreBtn.classList.toggle('visually-hidden')
     simpleLightbox.refresh();
     
