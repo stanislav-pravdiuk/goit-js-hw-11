@@ -35,7 +35,6 @@ function onSearch(e) {
         return
     };
     fetchPictures(searchQuery)
-    
     e.target.reset();
 };
 
@@ -94,6 +93,7 @@ function onFetchError() {
 
 function onLoadMore() {
     fetchPictures(searchQuery)
+    searchQuery = '';
     if ((totalHits - page * per_page) > 0) {
         Notiflix.Notify.success(`Hooray! We found ${totalHits - page * per_page} images.`);
     };
