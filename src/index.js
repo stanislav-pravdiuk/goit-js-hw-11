@@ -29,15 +29,14 @@ const simpleLightbox = new SimpleLightbox(".gallery a", {
 
 function onSearch(e) {
     e.preventDefault();
-    searchQuery = e.target.searchQuery.value;
-    resetMarkup();
-    if (searchQuery === '') {
-        location. reload()
+    searchQuery = e.target.searchQuery.value.trim();
+    // resetMarkup();
+    if (!searchQuery) {
         return
     };
     fetchPictures(searchQuery)
     
-    e.target.searchQuery.value = '';
+    // e.target.searchQuery.value = ''; 
 };
 
 function resetMarkup() {
@@ -76,7 +75,7 @@ function renderMarkup(pictures) {
         return createdEl;
     }).join('');
 
-    refs.galleryContainer.innerHTML = createdElements;
+    refs.galleryContainer.insertAdjacentElement('beforeend', createdElements);
     refs.loadMoreBtn.classList.toggle('visually-hidden')
     simpleLightbox.refresh();
     
